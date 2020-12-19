@@ -17,6 +17,12 @@ Route::get('/{any}', function(){
 		return view('vueapp');
 })->where('any', '.*');
 
+//registered laravel routes for SPA, unreachable directly
+Route::group(['prefix' => 'app'], function() {
+	Route::get('/register', 'RegistrationController@create');
+	Route::post('/register', 'RegistrationController@store');
+	Route::get('/secrets', 'SecretController@index');
+});	
 
 /*
 Route::get('/', function () {
@@ -49,6 +55,6 @@ Route::get('/register', function () {
 });
 */
 
-Auth::routes();
+//Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
