@@ -20,14 +20,15 @@ import ResetPassword from './components/ResetPassword'
 const router = new VueRouter({
 	mode: 'history',
 	routes: [
+	
 		{
 			path: '/',
-			name: 'welcome',
-			component: Welcome,
+			name: 'home',
+			component: Home,
 			props: { title: "Rpg Game Home" }
 		},
 		{
-			path: '/login',
+			path: '/loginForm',
 			name: 'login',
 			component: Login,
 			props: {}
@@ -48,6 +49,12 @@ const router = new VueRouter({
 			path: '/resetPass',
 			name: 'resetPass',
 			component: ResetPassword,
+			props: {}
+		},
+		{
+			path: '/welcome',
+			name: 'welcome',
+			component: Welcome,
 			props: {}
 		},			
 	],

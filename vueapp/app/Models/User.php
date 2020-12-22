@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+//later used in laravel foritify
 //use Illuminate\Contracts\Auth\MustVerifyEmail;
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,6 +13,7 @@ use Database\Factories\UserFactory;
 //use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
+//class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 	//use HasApiTokens, Notifiable;

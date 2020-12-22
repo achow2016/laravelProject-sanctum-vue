@@ -1,16 +1,24 @@
 <template>
-	<section class="col text-center">
-		<div class="row">
-			<div class="col">
-				<h1>{{title}}</h1>
-				<h2>Welcome!</h2>
-			</div>
-		</div>
-	</section>
+    <div>
+        <div v-if="secrets.length" class="row">
+            <div class="secret" v-for="(secret, index) in secrets" :key="index">
+                <strong v-text="secret.secret"></strong> - created at <span v-text="secret.created_at"></span>
+            </div>
+        </div>
+    </div>
 </template>
 <script>
 	export default {
-		props : ['title','message','error']
+		props : ['title','message','error'],
+		data() {
+			return {
+				secrets: [],
+				formData: {
+					email: '',
+					password: ''
+				}
+			}
+		},
 	}
 </script>
 <style scoped>

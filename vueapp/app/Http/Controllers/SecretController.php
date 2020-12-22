@@ -9,6 +9,7 @@ class SecretController extends Controller
     //
 	public function index()
 	{
-		return App\Models\Secret::all();
+		//return App\Models\Secret::all();
+		return $request->user()->secrets;
 	}
 }

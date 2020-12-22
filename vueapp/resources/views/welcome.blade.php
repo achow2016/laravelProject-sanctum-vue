@@ -21,7 +21,7 @@
         </style>
     </head>
 	<body>
-		<div id="app">
+		<div id="app" class="col">
 			<welcome :title="'{{$title}}'"></welcome>
 		</div>
 		<script src="{{ asset('js/app.js') }}" defer></script>
