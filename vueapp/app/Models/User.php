@@ -19,7 +19,7 @@ class User extends Authenticatable
 	//use HasApiTokens, Notifiable;
 	use HasFactory;
 	
-	protected $table = 'rpgGameUsers';
+	protected $table = 'rpggameusers';
 
     /**
      * The attributes that are mass assignable.

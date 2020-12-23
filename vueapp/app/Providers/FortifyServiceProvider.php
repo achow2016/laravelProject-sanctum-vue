@@ -46,6 +46,9 @@ class FortifyServiceProvider extends ServiceProvider
 				return $user;
 			}
 		});
+		
+		Fortify::registerView(fn () => view('vueapp'));
+		
 		/*
 		Fortify::registerView(function () {
 			return redirect('/register');

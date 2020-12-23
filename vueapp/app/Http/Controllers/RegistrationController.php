@@ -11,11 +11,27 @@ use Carbon\Carbon;
 use Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use DateTime;
 use DateInterval;
 
 class RegistrationController extends Controller
 {
+	public function register(Request $request) {
+		/*
+		$this->validate([
+			'name' => 'required',
+			'email' => ['required', 'email', 'unique:rpggameusers'],
+			'password' => ['required', 'confirmed']
+		]);
+		*/
+		$user = User::create([
+			'name' => $request->name,
+			'email' => $request->email,
+			'password' => $request->password //hashed in user model
+		]);
+	}
+	
 	public function create()
 	{
 		return view('register');

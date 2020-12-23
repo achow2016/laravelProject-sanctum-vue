@@ -64,8 +64,8 @@
 		},
 		methods: {
 			performLogin() {
-				axios.get('/sanctum/csrf-cookie').then(response => {
-					axios.post('loginForm/login', this.formData).then(response => {
+				axios.get('sanctum/csrf-cookie').then(response => {
+					axios.post('/login', this.formData).then(response => {
 						console.log('User signed in!');
 					}).catch(error => console.log(error)); //mismatch fail
 				});

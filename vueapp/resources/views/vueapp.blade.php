@@ -17,5 +17,6 @@
 		</div>
 		<script type="text/javascript" src="js/vueapp.js"></script>
 		<script src="{{ asset('js/vueapp.js') }}" defer></script>
+		
 	</body>
 </html>

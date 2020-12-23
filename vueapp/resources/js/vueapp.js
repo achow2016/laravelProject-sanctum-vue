@@ -34,7 +34,7 @@ const router = new VueRouter({
 			props: {}
 		},
 		{
-			path: '/register',
+			path: '/registerForm',
 			name: 'register',
 			component: Register,
 			props: {}

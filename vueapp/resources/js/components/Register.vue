@@ -10,7 +10,7 @@
 								<label for="name">Name:</label>
 							</div>
 							<div class="col-sm-8">
-								<input type="text" class="form-control" id="name" name="name">
+								<input type="text" v-model="formData.name" class="form-control" id="name" name="name">
 							</div>
 						</div>
 						
@@ -19,7 +19,7 @@
 								<label for="email">Email:</label>
 							</div>
 							<div class="col-sm-8">
-								<input type="email" class="form-control" id="email" name="email">
+								<input type="email" v-model="formData.email" class="form-control" id="email" name="email">
 							</div>
 						</div>
 
@@ -28,7 +28,7 @@
 								<label for="password">Password:</label>
 							</div>
 							<div class="col-sm-8">
-								<input type="password" class="form-control" id="password" name="password" autocomplete="on">
+								<input type="password" v-model="formData.password" class="form-control" id="password" name="password" autocomplete="on">
 							</div>
 						</div>
 						
@@ -37,14 +37,14 @@
 								<label for="password">Password Again:</label>
 							</div>
 							<div class="col-sm-8">
-								<input type="password" class="form-control" id="passwordConf" name="passwordConf" autocomplete="on">
+								<input type="password" v-model="formData.password_confirmation" class="form-control" id="passwordConf" name="passwordConf" autocomplete="on">
 							</div>
 						</div>
 
 						<div class="form-group row">
 							<!--div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.sitekey') }}"></div-->
 							<div class="col-sm-8 offset-sm-2">
-								<button type="submit" class="btn btn-primary">Login</button>
+								<button type="submit" @click.prevent="register" class="btn btn-primary">Register</button>
 								<br><br>
 								<a href="/login">Login</a>
 								<br><br>
@@ -69,8 +69,28 @@
 		</div>
 </template>
 <script>
+	import User from "../apis/User";
+	import Csrf from "../apis/Csrf";
+	
 	export default {
-		props : ['title','message','error']
+		props : ['title','message','error'],
+		data() {
+			return {
+				formData: {
+					name: '',
+					email: '',
+					password: '',
+					password_confirmation: ''
+				}
+			}
+		},
+		methods: {
+			register() {
+				Csrf.getCookie().then(() => {
+					User.register(this.formData);
+				});
+			}	
+		}
 	}
 </script>
 <style scoped>
