@@ -10,7 +10,8 @@ class TransformApiHeaders  {
         $token_cookie = $request->cookie($cookie_name); 
 
         if ($token_cookie !== null) { 
-            $request->headers->add(["X-$cookie_name" => $token_cookie]); 
+            //$request->headers->add(["X-$cookie_name" => $token_cookie]); 
+            $request->headers->add(["X-XSRF-TOKEN" => $token_cookie]); 
         }
 
         return $next($request); 

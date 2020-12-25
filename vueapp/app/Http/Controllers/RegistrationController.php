@@ -8,28 +8,44 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-use Mail;
+//use Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+
 use DateTime;
 use DateInterval;
+
+use App\Mail\welcome;
+use Illuminate\Support\Facades\Mail;
 
 class RegistrationController extends Controller
 {
 	public function register(Request $request) {
-		/*
-		$this->validate([
+		
+		
+		$request->validate([
 			'name' => 'required',
-			'email' => ['required', 'email', 'unique:rpggameusers'],
-			'password' => ['required', 'confirmed']
+			'email' => 'required|email|unique:App\Models\User',
+			'password' => 'required|confirmed'
 		]);
-		*/
-		$user = User::create([
+		
+		Mail::to($request->email)->send(new welcome('Welcome to rpg game!'));
+			
+		User::create([
 			'name' => $request->name,
 			'email' => $request->email,
 			'password' => $request->password //hashed in user model
 		]);
+		
+		
+		/*
+		$data = array('note' => 'password reset successful!');
+		Mail::send('registrationNotice', $data, function($message) {
+				$message->to($request->user(), 'user')->subject('Welcome to Rpg Game!');
+				$message->from('example@gmail.com','Alan');
+		});
+		*/
 	}
 	
 	public function create()
@@ -68,7 +84,7 @@ class RegistrationController extends Controller
 			$data = array('link' => $text);
 			Mail::send('rpgGameResetMail', $data, function($message) {
 				$message->to($email, 'user')->subject('RpgGame password reset email');
-				$message->from('alanygchow@gmail.com','Alan');
+				$message->from('example@gmail.com','Alan');
 			});
 
 			if( count(Mail::failures()) > 0 ) {
@@ -157,7 +173,7 @@ class RegistrationController extends Controller
 			$data = array('note' => 'password reset successful!');
 			Mail::send('rpgGameResetMailConf', $data, function($message) {
 				$message->to($request->user)->subject('RpgGame password reset email');
-				$message->from('alanygchow@gmail.com','Alan');
+				$message->from('example@gmail.com','Alan');
 			});
 			return redirect('/login')->with('message', 'pass changed mail sent!'); 
 		}

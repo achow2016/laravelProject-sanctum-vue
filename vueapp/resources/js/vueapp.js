@@ -39,12 +39,14 @@ const router = new VueRouter({
 			component: Register,
 			props: {}
 		},
+		/*
 		{
 			path: '/home',
 			name: 'home',
 			component: Home,
 			props: {}
-		},		
+		},
+		*/		
 		{
 			path: '/resetPass',
 			name: 'resetPass',

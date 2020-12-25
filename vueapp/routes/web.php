@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers;
+use App\Http\Controllers\RegistrationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/{any}', function(){
 		return view('vueapp');
 })->where('any', '.*');
+
+Route::post('register', 'App\Http\Controllers\RegistrationController@register');
 
 
 //registered laravel routes for SPA, unreachable directly

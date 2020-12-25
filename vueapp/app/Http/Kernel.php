@@ -3,7 +3,7 @@
 namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
-use LAravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
+use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
 class Kernel extends HttpKernel
 {
@@ -16,7 +16,7 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
 	
-	 \App\Http\Middleware\TransformApiHeaders::class,
+		\App\Http\Middleware\TransformApiHeaders::class,
 	 
 	 
         // \App\Http\Middleware\TrustHosts::class,

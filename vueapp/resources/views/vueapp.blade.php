@@ -15,8 +15,6 @@
 		<div id="app">
 			<app></app>
 		</div>
-		<script type="text/javascript" src="js/vueapp.js"></script>
-		<script src="{{ asset('js/vueapp.js') }}" defer></script>
-		
+		<script src="{{ mix('/js/vueapp.js') }}"></script>
 	</body>
 </html>
