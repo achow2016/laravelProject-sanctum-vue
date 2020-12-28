@@ -36,7 +36,9 @@ class FortifyServiceProvider extends ServiceProvider
 			
 		});
 		*/
-		Fortify::loginView(fn () => view('vueapp'));
+		
+		/*
+		Fortify::loginView(fn () => view('loginForm'));
 		
 		Fortify::authenticateUsing(function (Request $request) {
 			$user = User::where('email', $request->email)->first();
@@ -47,8 +49,8 @@ class FortifyServiceProvider extends ServiceProvider
 			}
 		});
 		
-		Fortify::registerView(fn () => view('vueapp'));
-		
+		Fortify::registerView(fn () => view('register'));
+		*/
 		/*
 		Fortify::registerView(function () {
 			return redirect('/register');
@@ -68,9 +70,9 @@ class FortifyServiceProvider extends ServiceProvider
 		});
 		*/
 	
-        Fortify::createUsersUsing(CreateNewUser::class);
-        Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
-        Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
-        Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
+        //Fortify::createUsersUsing(CreateNewUser::class);
+        //Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
+        //Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
+        //Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
     }
 }

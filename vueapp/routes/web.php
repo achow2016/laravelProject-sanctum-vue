@@ -13,64 +13,15 @@ use App\Http\Controllers\RegistrationController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//Route::post('api/checkAccess', 'App\Http\Controllers\SessionController@checkAccess');
+Route::get('/login', function (){ return redirect('/loginForm');})->name('login');
+
+Route::group(['middleware' => 'auth:sanctum'], function() {
+	Route::post('/api/checkAccess', 'App\Http\Controllers\SessionController@checkAccess');
+});
 
 Route::get('/{any}', function(){
 		return view('vueapp');
 })->where('any', '.*');
 
 Route::post('register', 'App\Http\Controllers\RegistrationController@register');
-
-
-//registered laravel routes for SPA, unreachable directly
-/*
-Route::group(['prefix' => 'app'], function() {
-	Route::get('/register', 'RegistrationController@create');
-	Route::post('/register', 'RegistrationController@store');
-	Route::get('/secrets', 'SecretController@index');
-});	
-*/
-
-//mandatory route name for password reset laravel fortify placeholder
-/*
-Route::get('/{any}', function(){
-		return view('vueapp');
-})->where('any', '.*')->name('password.reset');;
-*/
-
-//middleware protected laravel forify, sanctum
-/*
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::view('home', 'home')->name('home');
-});
-*/
-/*
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/', function () {
-	return view('welcome',
-		[
-			'title' => "My Rpg Game"
-		]
-	);
-});
-Route::get('/login', function () {
-	return view('login',
-		[
-			'title' => "Login"
-		]
-	);
-});
-Route::get('/register', function () {
-	return view('register',
-		[
-			'title' => "Register"
-		]
-	);
-});
-*/
-
-//Auth::routes();
-//Route::post('register', 'App\Http\Controllers\RegistrationController@register');
-
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

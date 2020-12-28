@@ -17,6 +17,9 @@ import Register from './components/Register'
 import Home from './components/Home'
 import ResetPassword from './components/ResetPassword'
 
+//user api for sanctum auth
+import User from './apis/User';
+
 const router = new VueRouter({
 	mode: 'history',
 	routes: [
@@ -38,15 +41,7 @@ const router = new VueRouter({
 			name: 'register',
 			component: Register,
 			props: {}
-		},
-		/*
-		{
-			path: '/home',
-			name: 'home',
-			component: Home,
-			props: {}
-		},
-		*/		
+		},	
 		{
 			path: '/resetPass',
 			name: 'resetPass',
@@ -57,7 +52,11 @@ const router = new VueRouter({
 			path: '/welcome',
 			name: 'welcome',
 			component: Welcome,
-			props: {}
+			props: {},
+			beforeEnter: (to, from, next) => {
+				console.log(User.checkAccess());
+				next();
+			}
 		},			
 	],
 })

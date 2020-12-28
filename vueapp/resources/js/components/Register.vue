@@ -4,7 +4,11 @@
 				<div class="col">
 					<h2 class="text-center">Register</h2>
 					<div class="col">
-						<!--csrf field was here-->
+					
+						<div class="row" v-if="!!message">
+							<span v-if="!!message" class="col-sm-8 alert alert-warning" role="alert">{{message}}</span>
+						</div>
+						
 						<div class="form-group row">
 							<div class="col-sm-3">
 								<label for="name">Name:</label>
@@ -65,6 +69,7 @@
 								<a href="/loginReset">Reset Pass</a>
 							</div>
 						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -75,28 +80,29 @@
 	import Csrf from '../apis/Csrf';
 	
 	export default {
-		props : ['title','message'],
+		props : ['title'],
 		data() {
 			return {
 				name: '',
 				email: '',
 				password: '',
 				password_confirmation: '',		
-				errorList: []
+				errorList: [],
+				message: ''
 			}	
 		},
 		methods: {
 			process() {
 				Csrf.getCookie().then(() => {
 					User.register({
-						_method: 'POST',
 						name: this.name,
 						email: this.email,
 						password: this.password,
 						password_confirmation: this.password_confirmation
 					})
-					.then(() => {
-						this.$router.push('loginForm')
+					.then(response => {
+						console.log(response);
+						this.message = response.data.message;
 					})
 					.catch(error => {
 						if(error.response.status == 422)
@@ -104,9 +110,8 @@
 					});
 				});
 			}
-		},
+		}
 	};
 </script>
 <style scoped>
-
 </style>
