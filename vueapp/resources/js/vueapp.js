@@ -16,6 +16,7 @@ import Login from './components/Login'
 import Register from './components/Register'
 import Home from './components/Home'
 import ResetPassword from './components/ResetPassword'
+import CharacterBuilder from './components/CharacterBuilder'
 
 //user api for sanctum auth
 import User from './apis/User';
@@ -52,12 +53,14 @@ const router = new VueRouter({
 			path: '/welcome',
 			name: 'welcome',
 			component: Welcome,
-			props: {},
-			beforeEnter: (to, from, next) => {
-				console.log(User.checkAccess());
-				next();
-			}
-		},			
+			props: {}
+		},
+		{
+			path: '/characterBuilder',
+			name: 'characterBuilder',
+			component: CharacterBuilder,
+			props: {}
+		},						
 	],
 })
 const app = new Vue({

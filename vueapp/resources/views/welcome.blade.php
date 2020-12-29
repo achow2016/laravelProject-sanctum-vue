@@ -21,9 +21,9 @@
         </style>
     </head>
 	<body>
-		<div id="app" class="col">
+		<div id="app">
 			<welcome :title="'{{$title}}'"></welcome>
 		</div>
-		<script src="{{ asset('js/app.js') }}" defer></script>
+		<script src="{{ mix('/js/vueapp.js') }}"></script>
 	</body>
 </html>

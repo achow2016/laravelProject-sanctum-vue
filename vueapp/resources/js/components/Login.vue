@@ -1,5 +1,16 @@
 <template>
 	<div class="col">
+		<nav class="row">
+			<div class="col btn-group d-flex" role="group">
+				<div class="flex-fill w-50">
+					<router-link :to="{ name: 'register' }"><button type="button" class="btn btn-primary w-100">register</button></router-link>
+				</div>	
+				<div class="flex-fill w-50">
+					<router-link :to="{ name: 'resetPass' }"><button type="button" class="btn btn-primary w-100">reset</button></router-link>
+				</div>
+			</div>				
+		</nav>
+		
 		<div class="row text-center">
 				<div class="col">
 					<h2 class="text-center">Login</h2>
@@ -76,6 +87,7 @@
 					console.log(response.data.token.plainTextToken);
 					sessionStorage.removeItem('token');
 					sessionStorage.setItem('token', response.data.token.plainTextToken);
+					this.$router.push('welcome');
 				})
 				.catch(error => {
 					if(error.response.status == 422)

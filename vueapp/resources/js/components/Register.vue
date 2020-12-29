@@ -1,5 +1,17 @@
 <template>
 	<div class="col">
+	
+		<nav class="row">
+			<div class="col btn-group d-flex" role="group">
+				<div class="flex-fill w-100">
+					<router-link :to="{ name: 'login' }"><button type="button" class="btn btn-primary w-100">login</button></router-link>
+				</div>	
+				<div class="flex-fill w-100">
+					<router-link :to="{ name: 'resetPass' }"><button type="button" class="btn btn-primary w-100">reset</button></router-link>
+				</div>
+			</div>				
+		</nav>
+		
 		<div class="row text-center">
 				<div class="col">
 					<h2 class="text-center">Register</h2>
@@ -101,8 +113,10 @@
 						password_confirmation: this.password_confirmation
 					})
 					.then(response => {
-						console.log(response);
-						this.message = response.data.message;
+						console.log(response.data.token.plainTextToken);
+						sessionStorage.removeItem('token');
+						sessionStorage.setItem('token', response.data.token.plainTextToken);
+						this.$router.push('welcome');
 					})
 					.catch(error => {
 						if(error.response.status == 422)

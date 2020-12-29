@@ -81,7 +81,5 @@ class User extends Authenticatable
 	public function secrets()
 	{
 		return $this->hasMany('App\Models\Secret');
-	}
-	
-	
+	}	
 }

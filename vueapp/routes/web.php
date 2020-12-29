@@ -17,7 +17,7 @@ use App\Http\Controllers\RegistrationController;
 Route::get('/login', function (){ return redirect('/loginForm');})->name('login');
 
 Route::group(['middleware' => 'auth:sanctum'], function() {
-	Route::post('/api/checkAccess', 'App\Http\Controllers\SessionController@checkAccess');
+	Route::post('/api/getData', 'App\Http\Controllers\SessionController@getData');
 });
 
 Route::get('/{any}', function(){

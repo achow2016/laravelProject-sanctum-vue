@@ -10,14 +10,16 @@ export default {
 		await Csrf.getCookie();
 		return Api.post('/login', form);
 	},	
-	async getUser() {
+	async getData(form, token) { 
 		await Csrf.getCookie();
-		return Api.get('/user');
+		return Api.post('api/getData',form,{headers: {
+			'Content-type' : 'application/json',
+			'Authorization': `Bearer ${token}` 
+		}});	
 	},
-	
-	async checkAccess(form, token) { 
+	async logout(form, token) { 
 		await Csrf.getCookie();
-		return Api.post('api/checkAccess',form,{headers: {
+		return Api.post('api/logout',form,{headers: {
 			'Content-type' : 'application/json',
 			'Authorization': `Bearer ${token}` 
 		}});	

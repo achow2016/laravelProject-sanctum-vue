@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -13,12 +12,11 @@ use Illuminate\Validation\ValidationException;
 
 use Illuminate\Support\Facades\Hash;
 //use Illuminate\Support\Facades\Log;
-
-use DateTime;
-use DateInterval;
+//use DateTime;
+//use DateInterval;
 
 //use App\Mail\welcome;
-use Illuminate\Support\Facades\Mail;
+//use Illuminate\Support\Facades\Mail;
 
 class SessionController extends Controller
 {
@@ -48,14 +46,11 @@ class SessionController extends Controller
 	public function logout(Request $request) {
 		$user = User::where('id', Auth::id())->first();
 		$user->tokens()->delete();
-		Auth::logout();
+		return response('User logged out.', 200)->header('Content-Type', 'text/plain');
 	}
 	
-	public function checkAccess(Request $request) {
-		$data = $request->token;
-		return response()->json([
-			//'data' => $data
-			'data' => $request->user()
-		], 200);
+	//sends user data back to spa
+	public function getData(Request $request) {
+		return response($request->user(), 200)->header('Content-Type', 'text/plain');
 	}
 }

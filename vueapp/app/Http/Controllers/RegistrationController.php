@@ -38,14 +38,4 @@ class RegistrationController extends Controller
 		]);
 		return ['token' => $user->createToken('user-access-token',['server:access'])->plainTextToken, 'message' => 'registration successful'];
 	}
-	
-	public function create()
-	{
-		return view('register');
-	}
-
-	public function loginReset()
-	{
-		return view('rpgGameLoginReset');
-	}
 }
