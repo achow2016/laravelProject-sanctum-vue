@@ -38,7 +38,8 @@ class SessionController extends Controller
 			$user->tokens()->delete();
 			$token = $user->createToken('user-access-token',['server:access']);
 			//return ['token' => $token->plainTextToken];
-			return ['token' => $token];
+			//return ['token' => $token];
+			return response(['token' => $token], 200);
 		}
 	}
 	

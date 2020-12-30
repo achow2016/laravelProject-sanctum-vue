@@ -1,5 +1,5 @@
 <template>
-	<div class="col">
+	<div class="col text-light">
 		<nav class="row">
 			<div class="col btn-group d-flex" role="group">
 				<div class="flex-fill w-50">
@@ -16,6 +16,9 @@
 					<h2 class="text-center">Login</h2>
 					<div class="col">
 						<div class="form-group row">
+							<div v-if="!!navError" class="col-sm-8 alert alert-warning" role="alert">
+								<span class="text-danger">{{navError}}</span>
+							</div>
 							<div v-if="errorList.message" class="col-sm-8 alert alert-warning" role="alert">
 								<span class="text-danger">{{errorList.message[0]}}</span>
 							</div>	
@@ -72,7 +75,7 @@
 			return {
 				email: '',
 				password: '',
-				errorList: []
+				errorList: [],
 			}
 		},
 		methods: {
@@ -93,6 +96,11 @@
 					if(error.response.status == 422)
 						this.errorList = error.response.data.errors;	
 				});
+			}
+		},
+		computed: {
+			navError (){
+				return this.$route.params.navError;
 			}
 		}
 	};

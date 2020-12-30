@@ -39,13 +39,18 @@
 			}
 		},
 		mounted() { 
-			User.getData({_method: 'POST', token: sessionStorage.getItem('token')}, sessionStorage.getItem('token')).then((response) => {
-				console.log(response.data);
-				console.log(response.data.name);
-				this.username = response.data.name;
-				if(response.data.saveGame != null)
-					saveGame = true;
-			});
+			User.getData({_method: 'POST', token: sessionStorage.getItem('token')}, sessionStorage.getItem('token'))
+				.then((response) => {
+					console.log(response.data);
+					console.log(response.data.name);
+					this.username = response.data.name;
+					if(response.data.saveGame != null)
+						saveGame = true;
+				})
+				.catch(error => {
+					if(error.response.status == 401)
+						this.$router.push({name: 'login', params:{navError: 'You must be logged in to access this resource.'}});
+				});
 		},
 		methods: {
 			loadGame(){},

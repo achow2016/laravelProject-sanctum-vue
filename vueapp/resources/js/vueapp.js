@@ -24,7 +24,6 @@ import User from './apis/User';
 const router = new VueRouter({
 	mode: 'history',
 	routes: [
-	
 		{
 			path: '/',
 			name: 'home',

@@ -12,14 +12,14 @@ export default {
 	},	
 	async getData(form, token) { 
 		await Csrf.getCookie();
-		return Api.post('api/getData',form,{headers: {
+		return Api.post('/getData',form,{headers: {
 			'Content-type' : 'application/json',
 			'Authorization': `Bearer ${token}` 
 		}});	
 	},
 	async logout(form, token) { 
 		await Csrf.getCookie();
-		return Api.post('api/logout',form,{headers: {
+		return Api.post('/logout',form,{headers: {
 			'Content-type' : 'application/json',
 			'Authorization': `Bearer ${token}` 
 		}});	
