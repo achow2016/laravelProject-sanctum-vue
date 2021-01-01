@@ -38,19 +38,11 @@
 				saveGame: ''
 			}
 		},
-		mounted() { 
-			User.getData({_method: 'POST', token: sessionStorage.getItem('token')}, sessionStorage.getItem('token'))
-				.then((response) => {
-					console.log(response.data);
-					console.log(response.data.name);
-					this.username = response.data.name;
-					if(response.data.saveGame != null)
-						saveGame = true;
-				})
-				.catch(error => {
-					if(error.response.status == 401)
-						this.$router.push({name: 'login', params:{navError: 'You must be logged in to access this resource.'}});
-				});
+		created() {
+			let responseData = this.$route.params.response.data;
+			this.username = responseData.name;
+			if(responseData.saveGame != null)
+				this.saveGame = true;
 		},
 		methods: {
 			loadGame(){},
@@ -61,7 +53,6 @@
 				this.$router.push('listScores')
 			},
 			logout() {
-				console.log("logging out");
 				User.logout({_method: 'POST', token: sessionStorage.getItem('token')}, sessionStorage.getItem('token')).then((response) => {
 					sessionStorage.removeItem('token');
 					this.$router.push('loginForm');

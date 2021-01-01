@@ -87,7 +87,6 @@
 					password: this.password
 				})
 				.then((response) => {
-					console.log(response.data.token.plainTextToken);
 					sessionStorage.removeItem('token');
 					sessionStorage.setItem('token', response.data.token.plainTextToken);
 					this.$router.push('welcome');

@@ -3,12 +3,11 @@ import VueRouter from 'vue-router'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
 Vue.use(VueRouter)
-// Install BootstrapVue
 Vue.use(BootstrapVue)
-// Optionally install the BootstrapVue icon components plugin
 //Vue.use(IconsPlugin)
+
 window.$ = window.jQuery = require('jquery')
-window.Popper = require('popper.js').default; // default is very important.
+window.Popper = require('popper.js').default;
 
 import App from './components/App'
 import Welcome from './components/Welcome'
@@ -24,11 +23,24 @@ import User from './apis/User';
 const router = new VueRouter({
 	mode: 'history',
 	routes: [
+		//home or base url goes to welcome user landing or login page
 		{
 			path: '/',
+			alias: '/home',
 			name: 'home',
-			component: Home,
-			props: { title: "Rpg Game Home" }
+			beforeEnter (to, from, next) {
+				User.getData({_method: 'POST', token: sessionStorage.getItem('token')}, sessionStorage.getItem('token'))
+				.then((response) => {
+					to.params.response = response;
+					next({name:'welcome'},to.params);	
+				})
+				.catch(error => {
+					if(error.response.status == 401)
+						next({name:'login', params:{navError: 'Please login to use this application.'}, replace:true});			
+					else
+						next({name:'login', params:{navError: 'unknown error, contact administrator.'}, replace:true});
+				});
+			}
 		},
 		{
 			path: '/loginForm',
@@ -52,14 +64,46 @@ const router = new VueRouter({
 			path: '/welcome',
 			name: 'welcome',
 			component: Welcome,
-			props: {}
+			props: {},
+			meta: {},
+			//before entering route, checks if user is logged in
+			beforeEnter (to, from, next) {
+				User.getData({_method: 'POST', token: sessionStorage.getItem('token')}, sessionStorage.getItem('token'))
+				.then((response) => {
+					to.params.response = response;
+					next(to.params);	
+				})
+				.catch(error => {
+					if(error.response.status == 401)
+						next({name:'login', params:{navError: 'You must be logged in to access that resource.'}, replace:true});			
+					else
+						next({name:'login', params:{navError: 'unknown error, contact administrator.'}, replace:true});
+				});
+			},
 		},
 		{
 			path: '/characterBuilder',
 			name: 'characterBuilder',
 			component: CharacterBuilder,
 			props: {}
-		},						
+		},	
+		//catch all if non-defined url is entered. Goes to login page or user welcome landing
+		{
+			path: '*',
+			beforeEnter (to, from, next) {
+				User.getData({_method: 'POST', token: sessionStorage.getItem('token')}, sessionStorage.getItem('token'))
+				.then((response) => {
+					to.params.response = response;
+					next({name:'welcome'},to.params);	
+				})
+				.catch(error => {
+					if(error.response.status == 401)
+						next({name:'login', params:{navError: 'Please login to use this application.'}, replace:true});			
+					else
+						next({name:'login', params:{navError: 'unknown error, contact administrator.'}, replace:true});
+				});
+			}
+		}
 	],
 })
 const app = new Vue({
