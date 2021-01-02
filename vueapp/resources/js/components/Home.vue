@@ -1,22 +1,81 @@
 <template>
-	<section class="col">
-		<div class="row text-center">
+	<div>
+		<header v-bind:style="topSection" class="row p-3 m-3">
 			<div class="col">
-				<h1>{{title}}</h1>
-			</div>	
-		</div>	
-		<div class="row text-center">
+				<div class="row text-center">
+					<div class="col">
+						<h1>Alan's Website</h1>
+					</div>	
+				</div>	
+				<div class="row text-center">
+					<div class="col">
+						<h5>Welcome to my website!</h5>
+					</div>	
+				</div>
+			</div>
+		</header>
+		<nav v-bind:style="topNav" class="row p-3 m-3">
 			<div class="col">
-				<h2>Welcome!</h2>
-			</div>	
-		</div>
-	</section>
+				<div class="row">
+					<div class="col text-center">
+						<h5>Works</h5>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<div class="mx-auto w-30">
+							<router-link :to="{ name: 'login' }"><button type="button" class="btn btn-dark w-100">game</button></router-link>
+						</div>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<article v-bind:style="middleArticle" class="row p-3 m-3">
+			<div class="col text-center">
+				<p>I am using this website to show pages from my github!</p>
+			</div>
+		</article>
+		<footer v-bind:style="bottomFooter" class="row p-3 m-3">
+			<div class="col text-center">
+				<small>&copy;Copyright 2020 Alan</small>
+			</div>
+		</footer>
+	</div>
 </template>
 <script>
+	//https://www.publicdomainpictures.net/en/view-image.php?image=23549&picture=newspapers-and-glasses
+	//https://www.publicdomainpictures.net/pictures/100000/velka/night-sky-with-lonely-tree.jpg
 	export default {
-		props : ['title','message','error']
+		data() {
+			return {
+				topSection: {
+					color: 'white',
+					'background-color': 'black',
+					opacity: .5	
+				},
+				topNav: {
+					color: 'white',
+					'background-color': 'black',
+					opacity: .5	
+				},
+				middleArticle: {
+					color: 'white',
+					'background-color': 'black',
+					opacity: .5	
+				},
+				bottomFooter: {
+					color: 'white',
+					'background-color': 'black',
+					opacity: .5	
+				}
+			}
+		}
 	}
 </script>
+<style>
+	body {
+		background-image: url('/img/news_glasses.jpg')
+	}
+</style>
 <style scoped>
-
 </style>

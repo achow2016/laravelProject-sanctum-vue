@@ -26,6 +26,11 @@ const router = new VueRouter({
 		//home or base url goes to welcome user landing or login page
 		{
 			path: '/',
+			name: 'home',
+			component: Home,
+			props: {}
+			/*
+			path: '/',
 			alias: '/home',
 			name: 'home',
 			beforeEnter (to, from, next) {
@@ -41,6 +46,7 @@ const router = new VueRouter({
 						next({name:'login', params:{navError: 'unknown error, contact administrator.'}, replace:true});
 				});
 			}
+			*/
 		},
 		{
 			path: '/loginForm',
@@ -88,8 +94,14 @@ const router = new VueRouter({
 			props: {}
 		},	
 		//catch all if non-defined url is entered. Goes to login page or user welcome landing
+		/*
 		{
+			
 			path: '*',
+			name: 'home',
+			component: Home,
+			props: {}
+			
 			beforeEnter (to, from, next) {
 				User.getData({_method: 'POST', token: sessionStorage.getItem('token')}, sessionStorage.getItem('token'))
 				.then((response) => {
@@ -103,7 +115,9 @@ const router = new VueRouter({
 						next({name:'login', params:{navError: 'unknown error, contact administrator.'}, replace:true});
 				});
 			}
+			
 		}
+		*/
 	],
 })
 const app = new Vue({
