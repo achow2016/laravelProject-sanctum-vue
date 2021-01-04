@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Hash;
 
 class SessionController extends Controller
 {
-	//spa login method
+	//spa login
 	public function login(Request $request) {
 		
 		$request->validate([
@@ -43,7 +43,7 @@ class SessionController extends Controller
 		}
 	}
 	
-	//spa logout method
+	//spa logout
 	public function logout(Request $request) {
 		$user = User::where('id', Auth::id())->first();
 		$user->tokens()->delete();

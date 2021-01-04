@@ -1,12 +1,15 @@
 <template>
-	<div class="col text-light">
+	<div class="text-light">
 		<nav class="row">
-			<div class="col btn-group d-flex" role="group">
-				<div class="flex-fill w-50">
-					<router-link :to="{ name: 'register' }"><button type="button" class="btn btn-primary w-100">register</button></router-link>
+			<div class="col btn-group d-flex mb-2" role="group">
+				<div class="flex-fill w-33">
+					<router-link :to="{ name: 'home' }"><button type="button" class="btn btn-dark w-100">Home</button></router-link>
 				</div>	
-				<div class="flex-fill w-50">
-					<router-link :to="{ name: 'resetPass' }"><button type="button" class="btn btn-primary w-100">reset</button></router-link>
+				<div class="flex-fill w-33">
+					<router-link :to="{ name: 'register' }"><button type="button" class="btn btn-dark w-100">Register</button></router-link>
+				</div>	
+				<div class="flex-fill w-33">
+					<router-link :to="{ name: 'resetPassword' }"><button type="button" class="btn btn-dark w-100">Reset</button></router-link>
 				</div>
 			</div>				
 		</nav>
@@ -53,11 +56,7 @@
 						
 						<div class="row">
 							<div class="col-sm-8 offset-sm-2">
-								<button type="submit" @click.prevent="process" class="btn btn-primary">Login</button>
-								<br><br>
-								<a href="/registerForm">Register</a>
-								<br><br>
-								<a href="/resetPass">Reset Pass</a>
+								<button type="submit" @click.prevent="process" class="loginButton btn btn-dark w-50">Login</button>
 							</div>
 						</div>
 						
@@ -105,4 +104,7 @@
 	};
 </script>
 <style scoped>
+	div button:first-child {
+		border: 1px solid white;
+	}
 </style>

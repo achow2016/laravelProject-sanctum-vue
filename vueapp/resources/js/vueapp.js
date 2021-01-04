@@ -61,8 +61,8 @@ const router = new VueRouter({
 			props: {}
 		},	
 		{
-			path: '/resetPass',
-			name: 'resetPass',
+			path: '/resetPassword',
+			name: 'resetPassword',
 			component: ResetPassword,
 			props: {}
 		},

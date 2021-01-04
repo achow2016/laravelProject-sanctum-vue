@@ -24,7 +24,7 @@
 				<div class="row">
 					<div class="col-12">
 						<div class="mx-auto w-30">
-							<router-link :to="{ name: 'login' }"><button type="button" class="btn btn-dark w-100">game</button></router-link>
+							<router-link :to="{ name: 'login' }"><button type="button" class="btn btn-dark w-100">social rpg game</button></router-link>
 						</div>
 					</div>
 				</div>
@@ -32,7 +32,7 @@
 		</nav>
 		<article v-bind:style="middleArticle" class="row p-3 m-3">
 			<div class="col text-center">
-				<p>I am using this website to show pages from my github!</p>
+				<p>I am using this website to show work from my github!</p>
 			</div>
 		</article>
 		<footer v-bind:style="bottomFooter" class="row p-3 m-3">
@@ -78,4 +78,7 @@
 	}
 </style>
 <style scoped>
+	div button:first-child {
+		border: 1px solid white;
+	}
 </style>

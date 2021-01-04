@@ -14,6 +14,7 @@ use App\Http\Controllers\RegistrationController;
 |
 */
 //Route::post('api/checkAccess', 'App\Http\Controllers\SessionController@checkAccess');
+/*
 Route::get('/login', function (){ return redirect('/loginForm');})->name('login');
 
 Route::group(['middleware' => 'auth:sanctum'], function() {
@@ -21,8 +22,11 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
 	Route::post('/logout', 'App\Http\Controllers\SessionController@logout');
 });
 
+Route::post('register', 'App\Http\Controllers\RegistrationController@register');
+
+*/
 Route::get('/{any}', function(){
 		return view('vueapp');
 })->where('any', '.*');
 
-Route::post('register', 'App\Http\Controllers\RegistrationController@register');
+

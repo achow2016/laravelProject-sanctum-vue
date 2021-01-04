@@ -20,6 +20,7 @@ use App\Http\Controllers\SessionController;
 
 Route::group(['middleware' => 'auth:sanctum'], function() {
 	Route::post('/getData', 'App\Http\Controllers\SessionController@getData');
+	Route::post('/processResetRequest', 'App\Http\Controllers\RegistrationController@resetPassword');
 	Route::post('/logout', 'App\Http\Controllers\SessionController@logout');
 });
 

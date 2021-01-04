@@ -24,4 +24,11 @@ export default {
 			'Authorization': `Bearer ${token}` 
 		}});	
 	},
+	async resetPassword(form, token) { 
+		await Csrf.getCookie();
+		return Api.post('/processResetRequest',form,{headers: {
+			'Content-type' : 'application/json',
+			'Authorization': `Bearer ${token}` 
+		}});	
+	},
 }
