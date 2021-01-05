@@ -3,7 +3,7 @@
 		<nav class="row">
 			<div class="col btn-group d-flex" role="group">
 				<div class="flex-fill w-100">
-					<button v-on:click="logout" type="button" class="btn btn-primary w-100">logout</button>
+					<button v-on:click="logout" type="button" class="btn btn-dark w-100">logout</button>
 				</div>	
 			</div>				
 		</nav>
@@ -16,13 +16,13 @@
 		</div>
 		<div class="d-flex flex-column mt-2 align-items-center">
 			<div class="mb-2 mt-2 w-75">
-				<button v-on:click="newGame" id="startButton" type="button" class="btn btn-primary active w-100">New Game</button>
+				<button v-on:click="newGame" id="startButton" type="button" class="btn btn-dark active w-100">New Game</button>
 			</div>	
 			<div v-if="!!saveGame" class="mb-2 mt-2 w-75">	
-				<button v-on:click="loadGame" id="continueButton" type="button" class="btn btn-primary active w-100">Continue</button>
+				<button v-on:click="loadGame" id="continueButton" type="button" class="btn btn-dark active w-100">Continue</button>
 			</div>
 			<div class="mb-2 mt-2 w-75">	
-				<button v-on:click="listScores" type="button" class="btn btn-primary active w-100">Scores</button>
+				<button v-on:click="listScores" type="button" class="btn btn-dark active w-100">Scores</button>
 			</div>
 					
 		</div>	

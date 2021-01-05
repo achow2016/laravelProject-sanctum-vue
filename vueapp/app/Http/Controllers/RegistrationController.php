@@ -8,15 +8,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-//use Mail;
-//use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 //use Illuminate\Support\Facades\Log;
 
 use DateTime;
 use DateInterval;
 
-use App\Mail\welcome;
+use App\Mail\Welcome;
+use App\Mail\PasswordReset;
+use App\Mail\PasswordResetConfirmation;
 use Illuminate\Support\Facades\Mail;
 
 class RegistrationController extends Controller
@@ -29,122 +30,117 @@ class RegistrationController extends Controller
 			'password' => 'required|confirmed'
 		]);
 		
-		Mail::to($request->email)->send(new welcome('Welcome to rpg game!'));
-			
+		Mail::to($request->email)->send(new Welcome('Welcome to rpg game!'));		
+		
 		$user = User::create([
 			'name' => $request->name,
 			'email' => $request->email,
 			'password' => $request->password //hashed in user model
 		]);
-		return ['token' => $user->createToken('user-access-token',['server:access'])->plainTextToken, 'message' => 'registration successful'];
-	}
-	
-	//password reset email
-	private function sendResetEmail($email, $token)
-	{	
-		$user = RpgGameUser::where('email', $email)->first();
-		//Generates the password reset link and token
-		try {
-			$text = "127.0.0.1:8082/rpgGame/passwordReset?token=" . $token . "&email=" . urlencode($email);
-			$data = array('link' => $text);
-			Mail::send('rpgGameResetMail', $data, function($message) {
-				$message->to($email, 'user')->subject('RpgGame password reset email');
-				$message->from('alanygchow@gmail.com','Alan');
-			});
-
-			if( count(Mail::failures()) > 0 ) {
-				
-				return redirect('/login')->with('message', 'Error when reset email sent!');
-			   echo("<script>console.log('There were mail errors.');</script>");
-				
-			   foreach(Mail::failures() as $emailAddr) {
-				   echo("<script>console.log('" . $emailAddr . "');</script>");
-				} 
-			} 
-			else {
-				return redirect('/login')->with('message', 'Reset email sent!'); 
-			}
-		} catch (\Exception $e) {
-			return redirect('/login')->with('message', 'Mailing error!'); 
+		
+		if(count(Mail::failures()) > 0) {
+			return ['token' => $user->createToken('user-access-token',['server:access'])->plainTextToken, 'message' => 'Registration successful, welcome email failed to be sent.'];
+		} 
+		else {
+			return ['token' => $user->createToken('user-access-token',['server:access'])->plainTextToken, 'message' => 'registration successful!'];
 		}
 	}
 	
-	//validates reset email link
-	public function validatePassReset(Request $request) {
+	//generates a random token in db and calls send reset email function
+	public function generateResetPasswordLink(Request $request) {
 		$this->validate(request(), [
 			'email' => 'required|email'
 		]);
+		
 		$email = $request->input('email');
-		$user = RpgGameUser::where('email', $email)->first();
-		if(!$user)
-			return redirect('/login')->with('message', 'User does not exist!'); 
+		
+		$user = User::where('email', $email)->first();
+		if(!$user) {
+			$message = 'Error, user does not exist!';
+			return redirect('/resetPassword?message=' . urlencode($message));			
+		}
 		
 		//token work
 		DB::table('rpguserreset')->insert([
-			'email' => $request->email,
+			'email' => $email,
 			'token' => Str::random(60),
 			'created_at' => Carbon::now()
 		]);
 
 		$tokenData = DB::table('rpguserreset')->where('email', $request->email)->first();
 
-		//calls mailer function
+		//calls mailing function in this class
 		if ($this->sendResetEmail($request->email, $tokenData->token)) {
-			return redirect('/login')->with('message', 'Reset email sent!'); 
+			$message = 'Success, reset email sent to email address!';
+			return redirect('/resetPassword?message=' . urlencode($message)); 
 		} 
 		else {
-			return redirect('/login')->with('message', 'Network error!'); 
+			$message = 'Failed, internal error occurred. Please contact administrator!';
+			return redirect('/resetPassword?message=' . urlencode($message)); 
+		}
+	}
+	
+	//sends password reset email with token
+	private function sendResetEmail($email, $token)
+	{	
+		$user = User::where('email', $email)->first();
+
+		//Generates the password reset link and token
+		$text = "127.0.0.1:8000/processPasswordReset?token=" . $token . "&email=" . urlencode($email);
+		
+		Mail::to($email)->send(new PasswordReset('Click on this link to reset your password: ' . $text));
+		
+		if(count(Mail::failures()) > 0) {
+			return false;		 
+		} 
+		else {
+			return true;
 		}
 	}
 
-	//processes new password entered at spa new password screen
-	public function setNewPassword(Request $request) {
-		//validates input
+	//processes visit to reset password route from email
+	public function processPasswordReset(Request $request) {
 		$validator = Validator::make($request->all(), [
 			'email' => 'required',
-			'password' => 'required|confirmed',
 			'token' => 'required' 
 		]);
-
-		if ($validator->fails()) {
-			return redirect()->back()->withErrors(['email' => 'Please complete the form!']);
+		if($validator->fails()) {
+			$message = 'Failed, please send password request again.';
+			return redirect('/resetPassword?message=' . urlencode($message)); 
 		}
 
-		// Validate the token
+		//Validates the token
+		//Redirects the user back to the password reset request form if the token is invalid
 		$tokenData = DB::table('rpguserreset')->where('token', $request->token)->first();
-		// Redirect the user back to the password reset request form if the token is invalid
-		if (!$tokenData)
-			return redirect('/login')->with('message', 'Your reset token is invalid!'); 
-
-		$user = RpgGameUser::where('email', $tokenData->email)->first();
-		// Redirect the user back if the email is invalid
-		if (!$user) 
-			return redirect()->back()->withErrors(['email' => 'Email not found']);
+		if(!$tokenData) {
+			$message = 'Failed, your reset token is invalid.';
+			return redirect('/resetPassword?message=' . urlencode($message)); 		
+		}
+		
+		//Redirects the user back if the email is invalid
+		$user = User::where('email', $request->email)->first();
+		if(!$user) {
+			$message = 'Failed, email not found!';
+			return redirect('/resetPassword?message=' . urlencode($message));		
+		}
 		
 		//update the new password, hashed by model function already
-		$userData = $request->password;
-		$query = RpgGameUser::where('email', $request->email)->first();
-		$query->password = $userData;
-		$query->save();
-
-		//login the user immediately they change password successfully
-		Auth::guard('rpgUser')->login($user, true);
-		return redirect('/rpgGame'); 
+		$tempPassword = Str::random(10);
+		$user->password = $tempPassword;
+		$user->save();
 
 		//Deletes the token
 		DB::table('rpguserreset')->where('email', $request->email)->delete();
-
-		//Send Email Reset Success Email
-		try {
-			$data = array('note' => 'password reset successful!');
-			Mail::send('rpgGameResetMailConf', $data, function($message) {
-				$message->to($request->user)->subject('RpgGame password reset email');
-				$message->from('alanygchow@gmail.com','Alan');
-			});
-			return redirect('/login')->with('message', 'pass changed mail sent!'); 
-		}
-		catch (Exception $e) {
-			echo("<script>console.log('" . $e . "');</script>");
+		
+		Mail::to($request->email)->send(new PasswordResetConfirmation('Password reset complete, your new password is: ' . $tempPassword));
+		
+		if(count(Mail::failures()) > 0) {
+			$message = 'Error, new password not sent please retry or contact administrator.';
+			return redirect('/resetPassword?message=' . urlencode($message));	 
+		} 
+		else {
+			$message = 'Success, Check your email for your new password.';
+			return redirect('/resetPassword?message=' . urlencode($message));
 		}
 	}
 }

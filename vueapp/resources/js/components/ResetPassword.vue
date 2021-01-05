@@ -34,7 +34,7 @@
 						<input v-model="email" type="email" class="form-control" id="email">
 					</div>
 				</div>
-				<div id="canvasSite" class="form-group row mb-4">
+				<div id="canvasSite" class="form-group row mb-2">
 					<div class="col">
 						<canvas ref="canvas" width="100" height="100"></canvas>
 					</div>
@@ -49,7 +49,7 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-8 offset-sm-2">
-						<button type="submit" @click.prevent="process" class="loginButton btn btn-dark w-50">Login</button>
+						<button type="submit" @click.prevent="process" class="loginButton btn btn-dark w-50">Process</button>
 					</div>
 				</div>			
 			</div>
@@ -78,6 +78,8 @@
 		},
 		mounted() {
 			this.generateCode();
+			if(this.$route.query.message != null)
+				this.message = this.$route.query.message;
 		},
 		methods: {
 			generateCode() {
@@ -87,8 +89,8 @@
 				ctx.clearRect(0, 0, 100, 100);
 				ctx.font = "30px Arial";
 				ctx.fillStyle = "white";
-				ctx.textAlign = "left";
-				ctx.fillText(this.randomNumber, 10, 50);
+				ctx.textAlign = "center";
+				ctx.fillText(this.randomNumber, 50, 50);
 			},
 			process() {
 				if(this.code == this.randomNumber) {

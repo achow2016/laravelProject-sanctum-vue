@@ -25,8 +25,12 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
 Route::post('register', 'App\Http\Controllers\RegistrationController@register');
 
 */
+Route::get('/processPasswordReset', 'App\Http\Controllers\RegistrationController@processPasswordReset');
+
 Route::get('/{any}', function(){
 		return view('vueapp');
 })->where('any', '.*');
+
+
 
 

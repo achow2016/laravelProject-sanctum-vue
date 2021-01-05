@@ -20,7 +20,6 @@ use App\Http\Controllers\SessionController;
 
 Route::group(['middleware' => 'auth:sanctum'], function() {
 	Route::post('/getData', 'App\Http\Controllers\SessionController@getData');
-	Route::post('/processResetRequest', 'App\Http\Controllers\RegistrationController@resetPassword');
 	Route::post('/logout', 'App\Http\Controllers\SessionController@logout');
 });
 
@@ -28,6 +27,7 @@ Route::middleware('auth:sanctum')->get('/welcome', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/resetPassword', 'App\Http\Controllers\RegistrationController@generateResetPasswordLink');
 Route::post('register', 'App\Http\Controllers\RegistrationController@register');
 Route::post('login', 'App\Http\Controllers\SessionController@login');
 Route::get('logout', 'App\Http\Controllers\SessionController@logout');

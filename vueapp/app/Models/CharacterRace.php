@@ -10,6 +10,7 @@ class CharacterRace extends Model
 	use HasFactory;
 	
 	protected $table = 'character_race';
+	protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.
@@ -37,4 +38,8 @@ class CharacterRace extends Model
     protected $casts = [
         //'email_verified_at' => 'datetime',
     ];
+	
+	public function character() {
+		return $this->belongsTo('App\Models\Character', 'id');	
+	}	
 }

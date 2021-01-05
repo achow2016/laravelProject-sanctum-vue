@@ -78,8 +78,8 @@ class User extends Authenticatable
 		return $this->hasMany('App\Models\rpgGamePayment', 'rpg_game_user_id', 'id');
 	}
 	
-	public function secrets()
+	public function characters()
 	{
-		return $this->hasMany('App\Models\Secret');
-	}	
+		return $this->hasMany('App\Models\Character', 'user_id', 'id');
+	}
 }

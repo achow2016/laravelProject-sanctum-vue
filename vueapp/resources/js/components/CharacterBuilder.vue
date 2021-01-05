@@ -15,7 +15,7 @@
 					</div>					
 				</div>
 			
-				<div class="row">
+				<div id="allocBox" class="row bg-dark mt-2 mb-4 pt-4">
 					<div class="col">
 						<div class="row"><p class="mx-auto">Strength</p></div><br>
 						<div class="row"><p class="mx-auto">Endurance</p></div><br>
@@ -90,7 +90,7 @@
 				<div class="row">
 					<div class="col">
 						<div class="centered-button">
-							<button id="completeConfig" type="button" class="w-100 btn btn-primary active">Create</button>
+							<button v-on:click="createCharacter()" id="completeConfig" type="button" class="w-100 btn btn-dark active">Create</button>
 						</div>
 					</div>	
 				</div>	
@@ -157,9 +157,26 @@
 					default:
 						break;	
 				}
+			},
+			createCharacter() {
+				User.createCharacter({
+					_method: 'POST',
+					name: this.name,
+					email: this.email,
+					password: this.password
+				})
+				.then((response) => {
+				
+				})
+				.catch(error => {
+				
+				});
 			}
 		}
 	}
 </script>
 <style scoped>
+	#allocBox {
+		opacity: .7;
+	}
 </style>
