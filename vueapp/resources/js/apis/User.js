@@ -36,5 +36,13 @@ export default {
 	async resetPassword(form) {
 		await Csrf.getCookie();
 		return Api.post('/resetPassword', form);
-	},	
+	},
+	async getPosts(form, token) {
+		await Csrf.getCookie();
+		return Api.post('/getPosts',form,{headers: {
+			'Content-type' : 'application/json',
+			'Authorization': `Bearer ${token}` 
+		}});
+	},
+	
 }

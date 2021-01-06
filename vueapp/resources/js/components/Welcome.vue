@@ -1,30 +1,33 @@
 <template>
-    <div class="col d-flex flex-column text-light">
+    <div class="text-light">
 		<nav class="row">
-			<div class="col btn-group d-flex" role="group">
-				<div class="flex-fill w-100">
-					<button v-on:click="logout" type="button" class="btn btn-dark w-100">logout</button>
-				</div>	
+			<div class="col btn-group" role="group">
+				<button v-on:click="logout" type="button" class="btn btn-dark w-100">Logout</button>
 			</div>				
 		</nav>
 		
-		<div class="text-center mt-2 mb-2">
+		<div class="row text-center mt-2 mb-2">
 			<div class="col">
 				<h1>Rpg game</h1>
 				<h5>Welcome, {{username}}!</h5>
 			</div>
 		</div>
-		<div class="d-flex flex-column mt-2 align-items-center">
-			<div class="mb-2 mt-2 w-75">
-				<button v-on:click="newGame" id="startButton" type="button" class="btn btn-dark active w-100">New Game</button>
-			</div>	
-			<div v-if="!!saveGame" class="mb-2 mt-2 w-75">	
-				<button v-on:click="loadGame" id="continueButton" type="button" class="btn btn-dark active w-100">Continue</button>
-			</div>
-			<div class="mb-2 mt-2 w-75">	
-				<button v-on:click="listScores" type="button" class="btn btn-dark active w-100">Scores</button>
-			</div>
-					
+		
+		<div class="row d-flex flex-column mt-2 align-items-center">
+			<div class="col">
+				<div class="mx-auto mb-3 w-75">
+					<button v-on:click="newGame" id="startButton" type="button" class="btn btn-dark active w-100">New Game</button>
+				</div>	
+				<div v-if="!!saveGame" class="mx-auto mb-3 w-75">	
+					<button v-on:click="loadGame" id="continueButton" type="button" class="btn btn-dark active w-100">Continue</button>
+				</div>
+				<div class="mx-auto mb-3 w-75">	
+					<button v-on:click="listScores" type="button" class="btn btn-dark active w-100">Scores</button>
+				</div>
+				<div class="mx-auto mb-3 w-75">	
+					<button v-on:click="chat" type="button" class="btn btn-dark active w-100">Chat</button>
+				</div>
+			</div>		
 		</div>	
     </div>
 </template>
@@ -45,12 +48,17 @@
 				this.saveGame = true;
 		},
 		methods: {
-			loadGame(){},
+			loadGame(){
+			
+			},
 			newGame() {
 				this.$router.push('characterBuilder')
 			},
 			listScores() {
 				this.$router.push('listScores')
+			},
+			chat() {
+				this.$router.push('chat')
 			},
 			logout() {
 				User.logout({_method: 'POST', token: sessionStorage.getItem('token')}, sessionStorage.getItem('token')).then((response) => {

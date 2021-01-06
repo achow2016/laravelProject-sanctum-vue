@@ -21,6 +21,7 @@ use App\Http\Controllers\SessionController;
 Route::group(['middleware' => 'auth:sanctum'], function() {
 	Route::post('/getData', 'App\Http\Controllers\SessionController@getData');
 	Route::post('/logout', 'App\Http\Controllers\SessionController@logout');
+	Route::post('/getPosts', 'App\Http\Controllers\ChatController@getPosts');
 });
 
 Route::middleware('auth:sanctum')->get('/welcome', function (Request $request) {

@@ -16,6 +16,7 @@ import Register from './components/Register'
 import Home from './components/Home'
 import ResetPassword from './components/ResetPassword'
 import CharacterBuilder from './components/CharacterBuilder'
+import Chat from './components/Chat'
 
 //user api for sanctum auth
 import User from './apis/User';
@@ -92,7 +93,13 @@ const router = new VueRouter({
 			name: 'characterBuilder',
 			component: CharacterBuilder,
 			props: {}
-		},	
+		},
+		{
+			path: '/chat',
+			name: 'chat',
+			component: Chat,
+			props: {}
+		},		
 		//catch all if non-defined url is entered. Goes to login page or user welcome landing
 		/*
 		{
