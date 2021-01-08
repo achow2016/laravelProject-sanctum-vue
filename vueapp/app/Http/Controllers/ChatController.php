@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 //models
 use App\Models\Post;
+use App\Models\Reply;
 
 use DateTime;
 
@@ -23,6 +24,26 @@ class ChatController extends Controller {
 		//return view('rpgGameTextboard', ['posts' => $posts, 'message' => 'Post made.']);
 	}
 
+	public function makePostReply(Request $request)
+	{
+		
+		$targetPostId = $request->input('postId');
+		$replyText = $request->input('replyText');
+		$name = $request->user()->name;
+		$date = new DateTime("now");
+
+		$reply = new Reply();
+		$reply->setAttribute('target_post_id', $targetPostId);
+		$reply->setAttribute('name', $name);
+		$reply->setAttribute('postText', $replyText);
+		$reply->setAttribute('date', $date);
+		
+		$post = Post::where('post_id', $targetPostId)->first();
+		$post->replies()->save($reply);
+		$post->save();	
+		//return redirect('/rpgGame/textBoard/confirmPost'); 
+	}
+	
 	public function add(Request $request)
 	{
 		$handle = $request->input('handle');

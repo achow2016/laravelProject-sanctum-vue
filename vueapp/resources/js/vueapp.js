@@ -21,6 +21,20 @@ import Chat from './components/Chat'
 //user api for sanctum auth
 import User from './apis/User';
 
+function loginCheck(to, from, next) {
+	User.getData({_method: 'POST', token: sessionStorage.getItem('token')}, sessionStorage.getItem('token'))
+		.then((response) => {
+			to.params.response = response;
+			next(to.params);	
+		})
+		.catch(error => {
+			if(error.response.status == 401)
+				next({name:'login', params:{navError: 'You must be logged in to access that resource.'}, replace:true});			
+			else
+				next({name:'login', params:{navError: 'unknown error, contact administrator.'}, replace:true});
+		});
+}	
+
 const router = new VueRouter({
 	mode: 'history',
 	routes: [
@@ -75,6 +89,8 @@ const router = new VueRouter({
 			meta: {},
 			//before entering route, checks if user is logged in
 			beforeEnter (to, from, next) {
+				loginCheck(to,from,next);
+				/*
 				User.getData({_method: 'POST', token: sessionStorage.getItem('token')}, sessionStorage.getItem('token'))
 				.then((response) => {
 					to.params.response = response;
@@ -86,19 +102,26 @@ const router = new VueRouter({
 					else
 						next({name:'login', params:{navError: 'unknown error, contact administrator.'}, replace:true});
 				});
-			},
+				*/
+			}
 		},
 		{
 			path: '/characterBuilder',
 			name: 'characterBuilder',
 			component: CharacterBuilder,
-			props: {}
+			props: {},
+			beforeEnter (to, from, next) {
+				loginCheck(to,from,next);
+			}
 		},
 		{
 			path: '/chat',
 			name: 'chat',
 			component: Chat,
-			props: {}
+			props: {},
+			beforeEnter (to, from, next) {
+				loginCheck(to,from,next);
+			}
 		},		
 		//catch all if non-defined url is entered. Goes to login page or user welcome landing
 		/*

@@ -44,5 +44,11 @@ export default {
 			'Authorization': `Bearer ${token}` 
 		}});
 	},
-	
+	async makePostReply(form, token) {
+		await Csrf.getCookie();
+		return Api.post('/makePostReply',form,{headers: {
+			'Content-type' : 'application/json',
+			'Authorization': `Bearer ${token}` 
+		}});
+	},
 }

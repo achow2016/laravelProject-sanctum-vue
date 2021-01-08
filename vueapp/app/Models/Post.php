@@ -7,7 +7,7 @@ class Post extends Model
 {
 
 	protected $table = 'posts';
-
+	protected $primaryKey = 'post_id';
     /**
      * The attributes that are mass assignable.
      *
@@ -33,4 +33,9 @@ class Post extends Model
     protected $casts = [
         //'email_verified_at' => 'datetime',
     ];
+	
+	public function replies()
+	{
+		return $this->hasMany('App\Models\Reply', 'target_post_id', 'post_id');
+	}
 }
