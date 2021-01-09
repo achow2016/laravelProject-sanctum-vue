@@ -44,9 +44,23 @@ export default {
 			'Authorization': `Bearer ${token}` 
 		}});
 	},
+	async getReplies(form, token) {
+		await Csrf.getCookie();
+		return Api.post('/getReplies',form,{headers: {
+			'Content-type' : 'application/json',
+			'Authorization': `Bearer ${token}` 
+		}});
+	},
 	async makePostReply(form, token) {
 		await Csrf.getCookie();
 		return Api.post('/makePostReply',form,{headers: {
+			'Content-type' : 'application/json',
+			'Authorization': `Bearer ${token}` 
+		}});
+	},
+	async makePost(form, token) {
+		await Csrf.getCookie();
+		return Api.post('/makePost',form,{headers: {
 			'Content-type' : 'application/json',
 			'Authorization': `Bearer ${token}` 
 		}});

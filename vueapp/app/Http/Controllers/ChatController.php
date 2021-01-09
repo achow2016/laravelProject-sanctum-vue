@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 //models
 use App\Models\Post;
@@ -18,6 +19,13 @@ class ChatController extends Controller {
 		return response(['posts' => $posts], 200);
 	}
 	
+	public function getReplies(Request $request) 
+	{
+		$targetPostId = $request->input('postId');
+		$replies = Reply::where('target_post_id', $targetPostId)->get();
+		return response(['replies' => $replies], 200);
+	}
+	
 	public function confirmPost() 
 	{
 		$posts = Post::all();
@@ -26,7 +34,6 @@ class ChatController extends Controller {
 
 	public function makePostReply(Request $request)
 	{
-		
 		$targetPostId = $request->input('postId');
 		$replyText = $request->input('replyText');
 		$name = $request->user()->name;
@@ -44,14 +51,14 @@ class ChatController extends Controller {
 		//return redirect('/rpgGame/textBoard/confirmPost'); 
 	}
 	
-	public function add(Request $request)
+	public function makePost(Request $request)
 	{
-		$handle = $request->input('handle');
-		$postText = $request->input('post');
+		$name = $request->user()->name;
+		$postText = $request->input('postText');
 		$date = new DateTime("now");
 
 		$post = new Post();
-		$post->setAttribute('name', $handle);
+		$post->setAttribute('name', $name);
 		$post->setAttribute('postText', $postText);
 		$post->setAttribute('date', $date);
 
