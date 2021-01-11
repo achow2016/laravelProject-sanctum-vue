@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
 	Route::post('/getReplies', 'App\Http\Controllers\ChatController@getReplies');
 	Route::post('/makePostReply', 'App\Http\Controllers\ChatController@makePostReply');
 	Route::post('/makePost', 'App\Http\Controllers\ChatController@makePost');
+	Route::post('/createCharacter', 'App\Http\Controllers\CharacterController@createCharacter');
 });
 
 Route::middleware('auth:sanctum')->get('/welcome', function (Request $request) {

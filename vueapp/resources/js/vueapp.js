@@ -31,7 +31,7 @@ function loginCheck(to, from, next) {
 			if(error.response.status == 401)
 				next({name:'login', params:{navError: 'You must be logged in to access that resource.'}, replace:true});			
 			else
-				next({name:'login', params:{navError: 'unknown error, contact administrator.'}, replace:true});
+				next({name:'login', params:{navError: 'Could not get user state from database, contact administrator.'}, replace:true});
 		});
 }	
 

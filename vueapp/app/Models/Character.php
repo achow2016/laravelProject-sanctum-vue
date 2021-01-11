@@ -18,11 +18,12 @@ class Character extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'user_id', 
+        'id', 'ownerUser', 'raceId', 'avatar',
 		'page', 'chapter', 
-		'health', 'stamina', 'accuracy', 'agility', 
+		'health', 'stamina', 'accuracy', 'agility', 'attack',
 		'mapPosition',
 		'scoreTotal', 'damageDone', 'damageReceived', 'chaptersCleared', 'money', 'earningsTotal',
+		'staminaRegen', 'healthRegen',
 		'attackMultiplier', 'defenseMultiplier'
 	];
 
@@ -44,11 +45,11 @@ class Character extends Model
     ];
 	
 	public function user() {
-		return $this->belongsTo('App\Models\User', 'rpg_game_user_id');	
+		return $this->belongsTo('App\Models\User', 'rpg_game_user_id', 'ownerUser');	
 	}	
 	
 	public function race() {
-		return $this->hasOne('App\Models\CharacterRace', 'id', 'id');
+		return $this->hasOne('App\Models\CharacterRace', 'id', 'raceId');
 	}
 	
 	//many other models and db game data tables needed to be added and seeded

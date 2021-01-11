@@ -14,6 +14,12 @@
 			</div>
 		</header>
 		
+		<div v-if="!!sysError" class="row text-center mt-2 mb-2">
+			<div class="col-sm-8 alert alert-warning" role="alert">
+				<span class="text-danger">{{sysError}}</span>
+			</div>
+		</div>
+		
 		<section class="row text-center mt-2 mb-2">
 			<div class="col">
 				<div v-if="!!posts" class="col-sm-12">
@@ -99,7 +105,7 @@
 						this.posts = response.data.posts;
 					})
 					.catch(error => {
-						console.log("error");
+						this.$router.push({name:'chat', params:{sysError:'Error, posts could not be retrieved.'}});
 					});
 				});
 			},
@@ -147,8 +153,7 @@
 						}
 					})
 					.catch(error => {
-		
-							console.log(error);
+						this.$router.push({name:'chat', params:{sysError:'Error, replies to posts could not be retrieved.'}});
 					});
 				});
 			},
@@ -161,6 +166,9 @@
 				.then((response) => {
 					sessionStorage.removeItem('token');
 					this.$router.push('loginForm');
+				})
+				.catch(error => {
+					this.$router.push({name:'login', params:{navError:'Error, logout could not be performed.'}});
 				});
 			},
 			writeReply(event){
@@ -222,7 +230,7 @@
 						this.getReplies(this.replyId);
 					})	
 					.catch(error => {
-						console.log(error);
+						this.$router.push({name:'chat', params:{sysError:'Error, reply could not be posted.'}});
 					});
 				});
 			},
@@ -264,6 +272,11 @@
 					}
 					event.target.innerText = 'Expand';
 				}	
+			}
+		},
+		computed: {
+			sysError (){
+				return this.$route.params.sysError;
 			}
 		}
 	}

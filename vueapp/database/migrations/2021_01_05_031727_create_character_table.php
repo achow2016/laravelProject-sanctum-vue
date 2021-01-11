@@ -13,9 +13,33 @@ class CreateCharacterTable extends Migration
      */
     public function up()
     {
-        Schema::create('character', function (Blueprint $table) {
+		Schema::dropIfExists('character');
+		Schema::create('character', function (Blueprint $table) {
             $table->id();
+			$table->binary('avatar')->nullable();
+			$table->integer('raceId')->unsigned();
+			$table->integer('ownerUser')->unsigned();
+			$table->integer('page')->default('0');
+			$table->integer('chapter')->default('0');
+			$table->integer('health')->default('0');
+			$table->integer('stamina')->default('0');
+			$table->integer('accuracy')->default('1');
+			$table->integer('attack')->default('0');
+			$table->integer('mapPosition')->nullable();
+			$table->integer('scoreTotal')->default('0');
+			$table->integer('damageDone')->default('0');
+			$table->integer('staminaRegen')->default('0');
+			$table->integer('healthRegen')->default('0');
+			$table->integer('agility')->default('0');
+			$table->integer('damageReceived')->default('0');
+			$table->integer('chaptersCleared')->default('0');
+			$table->integer('money')->default('0');
+			$table->integer('earningsTotal')->default('0');
+			$table->integer('attackMultiplier')->default('1');
+			$table->integer('defenseMultiplier')->default('1');
             $table->timestamps();
+			$table->foreign('ownerUser')->references('id')->on('rpggameusers')->onDelete('cascade'); 
+			$table->foreign('raceId')->references('id')->on('character_race')->onDelete('cascade'); 
         });
     }
 

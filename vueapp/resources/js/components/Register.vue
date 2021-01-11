@@ -113,7 +113,7 @@
 					.then(response => {
 						sessionStorage.removeItem('token');
 						sessionStorage.setItem('token', response.data.token.plainTextToken);
-						this.$router.push('login');
+						this.$router.push('loginForm');
 					})
 					.catch(error => {
 						if(error.response.status == 422)

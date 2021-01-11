@@ -6,6 +6,12 @@
 			</div>				
 		</nav>
 		
+		<div v-if="!!navError" class="row text-center mt-2 mb-2">
+			<div class="col-sm-8 alert alert-warning" role="alert">
+				<span class="text-danger">{{navError}}</span>
+			</div>
+		</div>
+		
 		<div class="row text-center mt-2 mb-2">
 			<div class="col">
 				<h1>Rpg game</h1>
@@ -65,6 +71,11 @@
 					sessionStorage.removeItem('token');
 					this.$router.push('loginForm');
 				});
+			}
+		},
+		computed: {
+			navError (){
+				return this.$route.params.navError;
 			}
 		}
 	}
