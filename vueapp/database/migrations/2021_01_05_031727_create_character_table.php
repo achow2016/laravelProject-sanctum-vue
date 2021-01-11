@@ -19,6 +19,8 @@ class CreateCharacterTable extends Migration
 			$table->binary('avatar')->nullable();
 			$table->integer('raceId')->unsigned();
 			$table->integer('ownerUser')->unsigned();
+			$table->string('characterName')->unique();
+			$table->string('gameClass');
 			$table->integer('page')->default('0');
 			$table->integer('chapter')->default('0');
 			$table->integer('health')->default('0');
