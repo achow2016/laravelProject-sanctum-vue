@@ -18,6 +18,7 @@
 				<div class="col">
 					<h2 class="text-center">Login</h2>
 					<div class="col">
+					
 						<div class="form-group row">
 							<div v-if="!!navError" class="col-sm-8 alert alert-warning" role="alert">
 								<span class="text-danger">{{navError}}</span>

@@ -33,6 +33,9 @@
 				<div class="mx-auto mb-3 w-75">	
 					<button v-on:click="chat" type="button" class="btn btn-dark active w-100">Chat</button>
 				</div>
+				<div class="mx-auto mb-3 w-75">	
+					<button v-on:click="gameStore" type="button" class="btn btn-dark active w-100">Store</button>
+				</div>
 			</div>		
 		</div>	
     </div>
@@ -65,6 +68,9 @@
 			},
 			chat() {
 				this.$router.push('chat')
+			},
+			gameStore() {
+				this.$router.push('store')
 			},
 			logout() {
 				User.logout({_method: 'POST', token: sessionStorage.getItem('token')}, sessionStorage.getItem('token')).then((response) => {

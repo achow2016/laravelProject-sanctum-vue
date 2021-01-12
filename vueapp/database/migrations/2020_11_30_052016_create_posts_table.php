@@ -16,10 +16,12 @@ class CreatePostsTable extends Migration
 		Schema::dropIfExists('posts');
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('post_id');
+			$table->integer('user_id')->unsigned();
             $table->string('name');
             $table->longText('postText');
             $table->date('date');
             $table->timestamps();
+			$table->foreign('user_id')->references('id')->on('rpggameusers')->onDelete('cascade'); 
         });
     }
 

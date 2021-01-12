@@ -19,6 +19,10 @@
 				<span class="text-danger">{{sysError}}</span>
 			</div>
 		</div>
+		<div v-if="errorList.postText || errorList.replyText" class="col-sm-8 alert alert-warning text-center" role="alert">
+			<span v-if="errorList.postText" class="text-danger">{{errorList.postText[0]}}</span>
+			<span v-if="errorList.replyText" class="text-danger">{{errorList.replyText[0]}}</span>
+		</div>
 		
 		<section class="row text-center mt-2 mb-2">
 			<div class="col">
@@ -228,9 +232,11 @@
 							cleaningTarget.removeChild(postTarget.childNodes[1]);
 						}
 						this.getReplies(this.replyId);
+						this.errorList = [];
 					})	
 					.catch(error => {
-						this.$router.push({name:'chat', params:{sysError:'Error, reply could not be posted.'}});
+						if(error.response.status == 422)
+							this.errorList = error.response.data.errors;
 					});
 				});
 			},
@@ -247,6 +253,7 @@
 					.then(response => {
 						this.getPosts();
 						postSpace.value = '';
+						this.errorList = [];
 					})
 					.catch(error => {
 						if(error.response.status == 422)

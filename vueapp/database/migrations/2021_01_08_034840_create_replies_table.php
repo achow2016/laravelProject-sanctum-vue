@@ -16,12 +16,14 @@ class CreateRepliesTable extends Migration
 		Schema::dropIfExists('replies');
         Schema::create('replies', function (Blueprint $table) {
             $table->increments('id');
+			$table->integer('user_id')->unsigned();
 			$table->integer('target_post_id')->unsigned();
             $table->string('name');
             $table->longText('postText');
             $table->date('date');
             $table->timestamps();
 			$table->foreign('target_post_id')->references('post_id')->on('posts')->onDelete('cascade'); 
+			$table->foreign('user_id')->references('id')->on('rpggameusers')->onDelete('cascade'); 
         });
     }
 

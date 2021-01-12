@@ -14,7 +14,7 @@ class Post extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'postText', 'date'
+        'user_id', 'name', 'postText', 'date'
     ];
 
     /**
@@ -38,4 +38,9 @@ class Post extends Model
 	{
 		return $this->hasMany('App\Models\Reply', 'target_post_id', 'post_id');
 	}
+	
+	public function user()
+    {
+        return $this->belongsTo('App\Models\User', 'user_id', 'id');
+    }
 }

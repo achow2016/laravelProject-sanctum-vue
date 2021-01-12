@@ -14,7 +14,7 @@ class Reply extends Model
      * @var array
      */
     protected $fillable = [
-        'target_post_id', 'name', 'postText', 'date'
+        'user_id', 'target_post_id', 'name', 'postText', 'date'
     ];
 
     /**
@@ -37,5 +37,10 @@ class Reply extends Model
 	public function post()
     {
         return $this->belongsTo('App\Models\Post', 'target_post_id', 'post_id');
+    }
+	
+	public function user()
+    {
+        return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
 }

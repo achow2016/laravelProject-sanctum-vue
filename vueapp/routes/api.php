@@ -21,11 +21,19 @@ use App\Http\Controllers\SessionController;
 Route::group(['middleware' => 'auth:sanctum'], function() {
 	Route::post('/getData', 'App\Http\Controllers\SessionController@getData');
 	Route::post('/logout', 'App\Http\Controllers\SessionController@logout');
+	//chat
 	Route::post('/getPosts', 'App\Http\Controllers\ChatController@getPosts');
 	Route::post('/getReplies', 'App\Http\Controllers\ChatController@getReplies');
 	Route::post('/makePostReply', 'App\Http\Controllers\ChatController@makePostReply');
 	Route::post('/makePost', 'App\Http\Controllers\ChatController@makePost');
+	//game
 	Route::post('/createCharacter', 'App\Http\Controllers\CharacterController@createCharacter');
+	//store
+	Route::post('/getStoreItems', 'App\Http\Controllers\GameStoreController@getStoreItems');
+	Route::post('/addCartItem', 'App\Http\Controllers\GameStoreController@addCartItem');
+	Route::post('/removeCartItem', 'App\Http\Controllers\GameStoreController@removeCartItem');
+	Route::post('/modifyCartItem', 'App\Http\Controllers\GameStoreController@modifyCartItem');
+	Route::post('/checkout', 'App\Http\Controllers\GameStoreController@checkout');
 });
 
 Route::middleware('auth:sanctum')->get('/welcome', function (Request $request) {

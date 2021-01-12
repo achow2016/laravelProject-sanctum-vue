@@ -26,20 +26,21 @@ class ChatController extends Controller {
 		return response(['replies' => $replies], 200);
 	}
 	
-	public function confirmPost() 
-	{
-		$posts = Post::all();
-		//return view('rpgGameTextboard', ['posts' => $posts, 'message' => 'Post made.']);
-	}
-
 	public function makePostReply(Request $request)
 	{
+		$request->validate([
+			'postId' => 'required',
+			'replyText' => 'required'		
+		]);
+		
 		$targetPostId = $request->input('postId');
 		$replyText = $request->input('replyText');
 		$name = $request->user()->name;
+		$user = User::where('name', $name)->first();
 		$date = new DateTime("now");
 
 		$reply = new Reply();
+		$reply->setAttribute('user_id', $user->id);
 		$reply->setAttribute('target_post_id', $targetPostId);
 		$reply->setAttribute('name', $name);
 		$reply->setAttribute('postText', $replyText);
@@ -53,11 +54,17 @@ class ChatController extends Controller {
 	
 	public function makePost(Request $request)
 	{
+		$request->validate([
+			'postText' => 'required'		
+		]);
+		
 		$name = $request->user()->name;
+		$user = User::where('name', $name)->first();
 		$postText = $request->input('postText');
 		$date = new DateTime("now");
 
 		$post = new Post();
+		$post->setAttribute('user_id', $user->id);
 		$post->setAttribute('name', $name);
 		$post->setAttribute('postText', $postText);
 		$post->setAttribute('date', $date);

@@ -72,4 +72,43 @@ export default {
 			'Authorization': `Bearer ${token}` 
 		}});
 	},
+	/*
+		store
+	*/
+	async getStoreItems(form, token) {
+		await Csrf.getCookie();
+		return Api.post('/getStoreItems',form,{headers: {
+			'Content-type' : 'application/json',
+			'Authorization': `Bearer ${token}` 
+		}});
+	},
+	async cartAddItem(form, token) {
+		await Csrf.getCookie();
+		return Api.post('/cartAddItem',form,{headers: {
+			'Content-type' : 'application/json',
+			'Authorization': `Bearer ${token}` 
+		}});
+	},
+	async cartRemoveItem(form, token) {
+		await Csrf.getCookie();
+		return Api.post('/cartRemoveItem',form,{headers: {
+			'Content-type' : 'application/json',
+			'Authorization': `Bearer ${token}` 
+		}});
+	},
+	async cartModifyItem(form, token) {
+		await Csrf.getCookie();
+		return Api.post('/cartModifyItem',form,{headers: {
+			'Content-type' : 'application/json',
+			'Authorization': `Bearer ${token}` 
+		}});
+	},
+	async checkout(form, token) {
+		await Csrf.getCookie();
+		return Api.post('/checkout',form,{headers: {
+			'Content-type' : 'application/json',
+			'Authorization': `Bearer ${token}` 
+		}});
+	},
+	
 }

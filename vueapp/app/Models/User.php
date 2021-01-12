@@ -82,4 +82,21 @@ class User extends Authenticatable
 	{
 		return $this->hasMany('App\Models\Character', 'user_id', 'id');
 	}
+	
+	public function posts()
+	{
+		return $this->hasMany('App\Models\Post', 'user_id', 'id');
+	}
+	
+	public function replies()
+	{
+		return $this->hasMany('App\Models\Reply', 'user_id', 'id');
+	}
+	
+	public function cart()
+	{
+		return $this->hasOne('App\Models\Cart', 'user_id', 'id');
+	}
+	
+	
 }

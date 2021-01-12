@@ -49,7 +49,9 @@ class CharacterController extends Controller {
 		$character->setAttribute('attack', $characterRace->attack  + $request->strengthAlloc);
 		$character->setAttribute('health', $characterRace->health);
 		$character->save();
-		return response(['character' => $character], 200);
+		//return response(['character' => $character], 200);
+		//then go to story after creating character
+		
 	}
 	
 }
