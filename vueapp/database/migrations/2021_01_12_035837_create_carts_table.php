@@ -15,7 +15,7 @@ class CreateCartsTable extends Migration
     {
 		Schema::dropIfExists('carts');
         Schema::create('carts', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
 			$table->integer('user_id')->unsigned();
 			$table->date('date');
             $table->timestamps();

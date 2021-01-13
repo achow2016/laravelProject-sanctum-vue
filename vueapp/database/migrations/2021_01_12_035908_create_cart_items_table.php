@@ -15,7 +15,7 @@ class CreateCartItemsTable extends Migration
     {
 		Schema::dropIfExists('cart_items');
         Schema::create('cart_items', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
 			$table->integer('cart_id')->unsigned();
 			$table->string('name');
 			$table->integer('quantity');

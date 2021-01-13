@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 //use Illuminate\Support\Facades\File;
 //use Illuminate\Support\Facades\Storage;
 use App\Models\CharacterRace;
+use App\Models\CashShopItem;
 //use Symfony\Component\Console\Output\ConsoleOutput;
 
 class DatabaseSeeder extends Seeder
@@ -40,6 +41,24 @@ class DatabaseSeeder extends Seeder
 			$characterRace->setAttribute('agility', $item['agility']);
 			$characterRace->save();	
 		}
+		
+		//shop inventory
+		$inventoryJsonPath = public_path() . '\json\StoreItems.json';
+		$data = file_get_contents($inventoryJsonPath);
+		$data = json_decode($data, true);
+		
+		foreach ($data['inventory'] as $item) {            
+			$cashShopItem = new CashShopItem();
+			$cashShopItem->setAttribute('name', $item['name']);
+			$cashShopItem->setAttribute('itemDescription', $item['itemDescription']);
+			$cashShopItem->setAttribute('type', $item['type']);
+			$cashShopItem->setAttribute('quantity', $item['quantity']);
+			if(array_key_exists("duration",$item))
+				$cashShopItem->setAttribute('duration', $item['duration']);	
+			$cashShopItem->setAttribute('cost', $item['cost']);
+			$cashShopItem->save();	
+		}
+		
 		//$output = new ConsoleOutput();
 		//$output->writeln(var_dump($data['race'][0]['race']));
     }

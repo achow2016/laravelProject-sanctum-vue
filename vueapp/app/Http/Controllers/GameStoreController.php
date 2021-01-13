@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 //models
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\CashShopItem;
 
 use DateTime;
 
@@ -15,6 +16,9 @@ class GameStoreController extends Controller {
 
 	public function getStoreItems() 
 	{
+		$cashShopItems = CashShopItem::all();
+		return response(['cashItems' => $cashShopItems], 200);
+		
 	}
 	
 	public function cartAddItem(Request $request) 
