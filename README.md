@@ -22,3 +22,14 @@ all replies to that post
 Replies fetched on clicking expand button under post, and listed under post in alternating colour  
 1/8/20:  
 https://user-images.githubusercontent.com/16962503/104082809-e968f180-51ed-11eb-8baa-8590d77b89bb.png
+
+Game Cash Store  
+Lists all cash shop items available on load  
+Populated with database seeder that gets data from a provided JSON file  
+Item descriptions can be expanded  
+Cart button on bottom, will expand cart contents container  
+Cart contents will be modifiable  
+Will include game currency, game items and physical items  
+Will send purchase detail to email  
+1/12/20:  
+https://user-images.githubusercontent.com/16962503/104404602-dddc3a00-550f-11eb-9211-d6c4f8d3e9a2.png  
