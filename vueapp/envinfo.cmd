@@ -9,7 +9,7 @@ IF EXIST "%dp0%\node.exe" (
   SET PATHEXT=%PATHEXT:;.JS;=;%
 )
 
-"%_prog%"  "%dp0%\node_modules\webpack\bin\webpack.js" %*
+"%_prog%"  "%dp0%\node_modules\envinfo\dist\cli.js" %*
 ENDLOCAL
 EXIT /b %errorlevel%
 :find_dp0
